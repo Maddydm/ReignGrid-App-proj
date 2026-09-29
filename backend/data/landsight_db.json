@@ -1,0 +1,706 @@
+{
+  "parcels": {
+    "PCL-1042": {
+      "id": "PCL-1042",
+      "owner": "Lakshmi Narayanan",
+      "area_sqft": 22215.6,
+      "status": "verified",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "Registered and AI-detected boundaries match within tolerance.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.1805,
+              13.0332
+            ],
+            [
+              80.18092,
+              13.0332
+            ],
+            [
+              80.18092,
+              13.03282
+            ],
+            [
+              80.1805,
+              13.03282
+            ],
+            [
+              80.1805,
+              13.0332
+            ]
+          ]
+        ]
+      },
+      "detected_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.1805,
+              13.0332
+            ],
+            [
+              80.18092,
+              13.0332
+            ],
+            [
+              80.18092,
+              13.03282
+            ],
+            [
+              80.1805,
+              13.03282
+            ],
+            [
+              80.1805,
+              13.0332
+            ]
+          ]
+        ]
+      },
+      "conflict_with": null,
+      "conflictsWith": null,
+      "iou_score": 1.0,
+      "encroachment_sqft": 0.0,
+      "resolution_notes": null,
+      "resolved_at": null,
+      "resolved_by": null
+    },
+    "PCL-1043": {
+      "id": "PCL-1043",
+      "owner": "S. Kumaravel",
+      "area_sqft": 19166.4,
+      "status": "verified",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "Registered and AI-detected boundaries match within tolerance.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18094,
+              13.0332
+            ],
+            [
+              80.18136,
+              13.0332
+            ],
+            [
+              80.18136,
+              13.03282
+            ],
+            [
+              80.18094,
+              13.03282
+            ],
+            [
+              80.18094,
+              13.0332
+            ]
+          ]
+        ]
+      },
+      "detected_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18094,
+              13.0332
+            ],
+            [
+              80.18136,
+              13.0332
+            ],
+            [
+              80.18136,
+              13.03282
+            ],
+            [
+              80.18094,
+              13.03282
+            ],
+            [
+              80.18094,
+              13.0332
+            ]
+          ]
+        ]
+      },
+      "conflict_with": null,
+      "conflictsWith": null,
+      "iou_score": 1.0,
+      "encroachment_sqft": 0.0,
+      "resolution_notes": null,
+      "resolved_at": null,
+      "resolved_by": null
+    },
+    "PCL-1044": {
+      "id": "PCL-1044",
+      "owner": "Devika Raman",
+      "area_sqft": 26571.6,
+      "status": "discrepancy",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "AI-detected boundary extends ~2943 sq. ft into PCL-1045. Flagged for field verification.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18138,
+              13.0332
+            ],
+            [
+              80.1818,
+              13.0332
+            ],
+            [
+              80.1818,
+              13.03282
+            ],
+            [
+              80.18138,
+              13.03282
+            ],
+            [
+              80.18138,
+              13.0332
+            ]
+          ]
+        ]
+      },
+      "detected_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18146,
+              13.0332
+            ],
+            [
+              80.18188,
+              13.0332
+            ],
+            [
+              80.18188,
+              13.03282
+            ],
+            [
+              80.18146,
+              13.03282
+            ],
+            [
+              80.18146,
+              13.0332
+            ]
+          ]
+        ]
+      },
+      "conflict_with": "PCL-1045",
+      "conflictsWith": "PCL-1045",
+      "iou_score": 0.68,
+      "encroachment_sqft": 2943.0,
+      "resolution_notes": null,
+      "resolved_at": null,
+      "resolved_by": null
+    },
+    "PCL-1045": {
+      "id": "PCL-1045",
+      "owner": "Arjun Mehta",
+      "area_sqft": 20908.8,
+      "status": "verified",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "Overlapped by an AI-detected extension from PCL-1044. Cadastral boundary itself unchanged.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18182,
+              13.0332
+            ],
+            [
+              80.18224,
+              13.0332
+            ],
+            [
+              80.18224,
+              13.03282
+            ],
+            [
+              80.18182,
+              13.03282
+            ],
+            [
+              80.18182,
+              13.0332
+            ]
+          ]
+        ]
+      },
+      "detected_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18182,
+              13.0332
+            ],
+            [
+              80.18224,
+              13.0332
+            ],
+            [
+              80.18224,
+              13.03282
+            ],
+            [
+              80.18182,
+              13.03282
+            ],
+            [
+              80.18182,
+              13.0332
+            ]
+          ]
+        ]
+      },
+      "conflict_with": null,
+      "conflictsWith": null,
+      "iou_score": 1.0,
+      "encroachment_sqft": 0.0,
+      "resolution_notes": null,
+      "resolved_at": null,
+      "resolved_by": null
+    },
+    "PCL-1046": {
+      "id": "PCL-1046",
+      "owner": "Priya Sundaram",
+      "area_sqft": 16988.4,
+      "status": "pending",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "High-resolution imagery captured; awaiting AI segmentation pass.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18226,
+              13.0332
+            ],
+            [
+              80.18268,
+              13.0332
+            ],
+            [
+              80.18268,
+              13.03282
+            ],
+            [
+              80.18226,
+              13.03282
+            ],
+            [
+              80.18226,
+              13.0332
+            ]
+          ]
+        ]
+      },
+      "detected_geom": null,
+      "conflict_with": null,
+      "conflictsWith": null,
+      "iou_score": null,
+      "encroachment_sqft": 0.0,
+      "resolution_notes": null,
+      "resolved_at": null,
+      "resolved_by": null
+    },
+    "PCL-1047": {
+      "id": "PCL-1047",
+      "owner": "T. Ravichandran",
+      "area_sqft": 23958.0,
+      "status": "verified",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "Registered and AI-detected boundaries match within tolerance.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.1805,
+              13.0328
+            ],
+            [
+              80.18092,
+              13.0328
+            ],
+            [
+              80.18092,
+              13.03242
+            ],
+            [
+              80.1805,
+              13.03242
+            ],
+            [
+              80.1805,
+              13.0328
+            ]
+          ]
+        ]
+      },
+      "detected_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.1805,
+              13.0328
+            ],
+            [
+              80.18092,
+              13.0328
+            ],
+            [
+              80.18092,
+              13.03242
+            ],
+            [
+              80.1805,
+              13.03242
+            ],
+            [
+              80.1805,
+              13.0328
+            ]
+          ]
+        ]
+      },
+      "conflict_with": null,
+      "conflictsWith": null,
+      "iou_score": 1.0,
+      "encroachment_sqft": 0.0,
+      "resolution_notes": null,
+      "resolved_at": null,
+      "resolved_by": null
+    },
+    "PCL-1048": {
+      "id": "PCL-1048",
+      "owner": "Meena Krishnan",
+      "area_sqft": 25264.8,
+      "status": "verified",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "Discrepancy resolved on 2026-09-22 14:30 UTC by Dr. J. Jean Justus. Notes: Field GPS boundary verified on-site at Ramapuram.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18094,
+              13.0328
+            ],
+            [
+              80.18136,
+              13.0328
+            ],
+            [
+              80.18136,
+              13.03242
+            ],
+            [
+              80.18094,
+              13.03242
+            ],
+            [
+              80.18094,
+              13.0328
+            ]
+          ]
+        ]
+      },
+      "detected_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.181,
+              13.0328
+            ],
+            [
+              80.18142,
+              13.0328
+            ],
+            [
+              80.18142,
+              13.03242
+            ],
+            [
+              80.181,
+              13.03242
+            ],
+            [
+              80.181,
+              13.0328
+            ]
+          ]
+        ]
+      },
+      "conflict_with": null,
+      "conflictsWith": null,
+      "iou_score": 0.75,
+      "encroachment_sqft": 1962.0,
+      "resolution_notes": "Field GPS boundary verified on-site at Ramapuram.",
+      "resolved_at": "2026-09-22 14:30 UTC",
+      "resolved_by": "Dr. J. Jean Justus"
+    },
+    "PCL-1049": {
+      "id": "PCL-1049",
+      "owner": "Suresh Babu",
+      "area_sqft": 20473.2,
+      "status": "verified",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "Overlapped by an AI-detected extension from PCL-1048. Cadastral boundary itself unchanged.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18138,
+              13.0328
+            ],
+            [
+              80.1818,
+              13.0328
+            ],
+            [
+              80.1818,
+              13.03242
+            ],
+            [
+              80.18138,
+              13.03242
+            ],
+            [
+              80.18138,
+              13.0328
+            ]
+          ]
+        ]
+      },
+      "detected_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18138,
+              13.0328
+            ],
+            [
+              80.1818,
+              13.0328
+            ],
+            [
+              80.1818,
+              13.03242
+            ],
+            [
+              80.18138,
+              13.03242
+            ],
+            [
+              80.18138,
+              13.0328
+            ]
+          ]
+        ]
+      },
+      "conflict_with": null,
+      "conflictsWith": null,
+      "iou_score": 1.0,
+      "encroachment_sqft": 0.0,
+      "resolution_notes": null,
+      "resolved_at": null,
+      "resolved_by": null
+    },
+    "PCL-1050": {
+      "id": "PCL-1050",
+      "owner": "Anitha Raghavan",
+      "area_sqft": 21780.0,
+      "status": "verified",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "Registered and AI-detected boundaries match within tolerance.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18182,
+              13.0328
+            ],
+            [
+              80.18224,
+              13.0328
+            ],
+            [
+              80.18224,
+              13.03242
+            ],
+            [
+              80.18182,
+              13.03242
+            ],
+            [
+              80.18182,
+              13.0328
+            ]
+          ]
+        ]
+      },
+      "detected_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18182,
+              13.0328
+            ],
+            [
+              80.18224,
+              13.0328
+            ],
+            [
+              80.18224,
+              13.03242
+            ],
+            [
+              80.18182,
+              13.03242
+            ],
+            [
+              80.18182,
+              13.0328
+            ]
+          ]
+        ]
+      },
+      "conflict_with": null,
+      "conflictsWith": null,
+      "iou_score": 1.0,
+      "encroachment_sqft": 0.0,
+      "resolution_notes": null,
+      "resolved_at": null,
+      "resolved_by": null
+    },
+    "PCL-1051": {
+      "id": "PCL-1051",
+      "owner": "K. Balamurugan",
+      "area_sqft": 17859.6,
+      "status": "pending",
+      "last_synced": "2026-09-22",
+      "lastSynced": "2026-09-22",
+      "notes": "High-resolution imagery captured; awaiting AI segmentation pass.",
+      "registered_geom": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.18226,
+              13.0328
+            ],
+            [
+              80.18268,
+              13.0328
+            ],
+            [
+              80.18268,
+              13.03242
+            ],
+            [
+              80.18226,
+              13.03242
+            ],
+            [
+              80.18226,
+              13.0328
+            ]
+          ]
+        ]
+      },
+      "detected_geom": null,
+      "conflict_with": null,
+      "conflictsWith": null,
+      "iou_score": null,
+      "encroachment_sqft": 0.0,
+      "resolution_notes": null,
+      "resolved_at": null,
+      "resolved_by": null
+    }
+  },
+  "imagery": {
+    "img-srm-ramapuram-01": {
+      "imagery_id": "img-srm-ramapuram-01",
+      "area_name": "Sector 12-B (SRM Ramapuram)",
+      "filename": "srm_ramapuram_survey_2024.tif",
+      "source_type": "file",
+      "file_path": "imagery/srm_ramapuram_survey_2024.tif",
+      "source_url": null,
+      "uploaded_at": "2024-11-02T10:30:00Z",
+      "status": "processed",
+      "resolution_m_per_px": 0.05,
+      "description": "SRM Ramapuram High-Resolution Drone Orthophoto (0.05m GSD)",
+      "bounds": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.1804,
+              13.0333
+            ],
+            [
+              80.18285,
+              13.0333
+            ],
+            [
+              80.18285,
+              13.03228
+            ],
+            [
+              80.1804,
+              13.03228
+            ],
+            [
+              80.1804,
+              13.0333
+            ]
+          ]
+        ]
+      }
+    },
+    "img-ecca8da0": {
+      "imagery_id": "img-ecca8da0",
+      "area_name": "SRM Ramapuram North",
+      "filename": "ramapuram_north_2026.tif",
+      "source_type": "file",
+      "file_path": "C:\\Users\\Madhav\\Downloads\\landsight-frontend\\backend\\data\\uploads\\img-ecca8da0_ramapuram_north_2026.tif",
+      "source_url": "local://storage/img-ecca8da0_ramapuram_north_2026.tif",
+      "uploaded_at": "2026-09-22T14:30:50.185475+00:00",
+      "status": "uploaded",
+      "resolution_m_per_px": 0.05,
+      "description": "Drone pass 2"
+    }
+  },
+  "last_updated": "2026-09-22T14:30:50.186061+00:00"
+}

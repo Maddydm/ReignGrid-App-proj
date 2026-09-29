@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  reigngrid-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reigngrid-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - SUPABASE_STORAGE_BUCKET=${SUPABASE_STORAGE_BUCKET:-cadastral-imagery}
+      - INSPECTOR_EMAIL=${INSPECTOR_EMAIL:-inspector@reigngrid.gov}
+      - INSPECTOR_PASSWORD=${INSPECTOR_PASSWORD:-inspector123}
+    volumes:
+      - ./backend:/app/backend
+      - ./landsight-frontend:/app/landsight-frontend
+      - ./supabase:/app/supabase

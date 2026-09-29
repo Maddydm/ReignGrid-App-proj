@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REIGNGRID — Geospatial Intelligence for the Physical World</title>
+  <meta name="description" content="AI-powered cadastral intelligence platform cross-referencing official land records with aerial and satellite imagery to detect boundary encroachments, parcel overlaps, and temporal shifts." />
+
+  <!-- Fonts: Inter & IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- MapLibre GL JS (Satellite Basemap Engine) -->
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       SCREEN 1: LANDING PAGE
+       ====================================================================== -->
+  <div id="landing-view">
+    <header class="landing-nav">
+      <div class="brand-logo">
+        <div class="brand-mark">
+          <i data-lucide="grid" style="width:16px;height:16px;"></i>
+        </div>
+        <span>REIGNGRID</span>
+      </div>
+      <ul class="landing-links">
+        <li><a href="#" class="nav-to-app" data-view="command-center">Command Center</a></li>
+        <li><a href="#" class="nav-to-app" data-view="map-intel">Map Intelligence</a></li>
+        <li><a href="#" class="nav-to-app" data-view="ai-processing">AI Processing</a></li>
+        <li><a href="#" class="nav-to-app" data-view="discrepancies">Discrepancy Center</a></li>
+        <li><a href="#" class="nav-to-app" data-view="field-verification">Field Verification</a></li>
+        <li><a href="#" class="nav-to-app" data-view="reports">Reports</a></li>
+      </ul>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="btn btn-outline" id="btnLandingSignIn">Sign In</button>
+        <button class="btn btn-forest nav-to-app" data-view="command-center">Open Platform</button>
+      </div>
+    </header>
+
+    <main class="landing-hero">
+      <div class="hero-pill">
+        <span class="badge-dot green"></span>
+        <span>EARTH OBSERVATION · CADASTRAL AI · SRM RAMAPURAM</span>
+      </div>
+
+      <h1 class="hero-title">
+        See what changed on the ground.
+      </h1>
+
+      <p class="hero-subtitle">
+        ReignGrid cross-references official land registry polygons against visible parcel boundaries 
+        segmented from drone and satellite orthophotos using deep learning — detecting encroachments, 
+        disputes, and spatial shifts before litigation begins.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="btn btn-primary nav-to-app" data-view="command-center" style="font-size:14px;padding:10px 20px;">
+          <i data-lucide="layout-dashboard" style="width:16px;height:16px;"></i>
+          Launch Command Center
+        </button>
+        <button class="btn btn-outline nav-to-app" data-view="map-intel" style="font-size:14px;padding:10px 20px;">
+          <i data-lucide="map" style="width:16px;height:16px;"></i>
+          Explore Map Intelligence
+        </button>
+      </div>
+
+      <!-- Preview Satellite Visual -->
+      <div class="hero-preview-frame">
+        <img src="https://images.unsplash.com/photo-1524813686514-a57563d77d66?w=1600&auto=format&fit=crop&q=80" alt="Satellite Earth Imagery" class="hero-preview-img" id="heroPreviewImg" />
+        <div class="hero-preview-overlay">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <span class="badge badge-verified">
+              <span class="badge-dot green"></span>
+              SECTOR 12-B · ACTIVE AI VERIFICATION
+            </span>
+            <span class="badge badge-neutral mono">13.0332° N, 80.1805° E</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+            <div style="color:#fff;text-align:left;">
+              <div style="font-size:16px;font-weight:700;">SRM Ramapuram Cadastral Zone</div>
+              <div style="font-size:12px;opacity:0.85;">10 Indexed Demonstration Parcels · 642.8 Acres Monitored</div>
+            </div>
+            <button class="btn btn-sm btn-forest nav-to-app" data-view="command-center">Enter Interactive Grid →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-tagline-footer">
+        Geospatial Intelligence for the Physical World.
+      </div>
+    </main>
+  </div>
+
+
+  <!-- ======================================================================
+       MAIN APPLICATION SHELL (Screens 2 - 8)
+       ====================================================================== -->
+  <div id="app-shell" style="display:none;">
+
+    <!-- Left Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="sidebar-brand" id="btnBackToLanding">
+          <div class="brand-mark">
+            <i data-lucide="grid" style="width:16px;height:16px;"></i>
+          </div>
+          <span>REIGNGRID</span>
+        </a>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-section-title">Navigation</div>
+        
+        <div class="nav-item active" data-view="command-center">
+          <i data-lucide="layout-dashboard" style="width:16px;height:16px;"></i>
+          <span>Overview</span>
+        </div>
+
+        <div class="nav-item" data-view="map-intel">
+          <i data-lucide="map" style="width:16px;height:16px;"></i>
+          <span>Map Intelligence</span>
+        </div>
+
+        <div class="nav-item" data-view="parcels">
+          <i data-lucide="layers" style="width:16px;height:16px;"></i>
+          <span>Parcels</span>
+          <span class="nav-item-badge mono">10</span>
+        </div>
+
+        <div class="nav-item" data-view="imagery">
+          <i data-lucide="camera" style="width:16px;height:16px;"></i>
+          <span>Imagery</span>
+        </div>
+
+        <div class="nav-section-title">AI & Disputes</div>
+
+        <div class="nav-item" data-view="ai-processing">
+          <i data-lucide="cpu" style="width:16px;height:16px;"></i>
+          <span>AI Processing</span>
+        </div>
+
+        <div class="nav-item" data-view="discrepancies">
+          <i data-lucide="alert-triangle" style="width:16px;height:16px;"></i>
+          <span>Discrepancies</span>
+          <span class="nav-item-badge danger mono" id="badgeDiscrepancyCount">48</span>
+        </div>
+
+        <div class="nav-item" data-view="field-verification">
+          <i data-lucide="clipboard-check" style="width:16px;height:16px;"></i>
+          <span>Field Verification</span>
+          <span class="nav-item-badge mono">2</span>
+        </div>
+
+        <div class="nav-section-title">Institutional</div>
+
+        <div class="nav-item" data-view="reports">
+          <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+          <span>Reports</span>
+        </div>
+
+        <div class="nav-item" data-view="system">
+          <i data-lucide="activity" style="width:16px;height:16px;"></i>
+          <span>System</span>
+        </div>
+      </div>
+
+      <!-- Bottom Inspector Profile Card -->
+      <div class="sidebar-footer">
+        <div class="inspector-profile">
+          <div class="inspector-avatar">JJ</div>
+          <div class="inspector-info">
+            <div class="inspector-name" id="sidebarInspectorName">Dr. J. Jean Justus</div>
+            <div class="inspector-status">
+              <span class="badge-dot green"></span>
+              <span id="sidebarInspectorTitle">Chief Surveyor</span>
+            </div>
+          </div>
+          <button class="btn btn-icon btn-ghost" id="btnToggleAuth" title="Sign Out / Change User">
+            <i data-lucide="log-out" style="width:14px;height:14px;"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="app-main">
+
+      <!-- Top Header Bar -->
+      <header class="app-header">
+        <div class="header-left">
+          <div class="screen-breadcrumb">
+            <span id="currentScreenTitle">Command Center</span>
+            <span class="sector-tag">SECTOR 12-B (RAMAPURAM)</span>
+          </div>
+        </div>
+
+        <div class="header-center">
+          <div class="status-pill">
+            <span class="badge-dot green"></span>
+            <span>AI Engine: ONLINE · PostGIS Real-time Sync</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Global Search -->
+          <div class="search-box">
+            <i data-lucide="search" class="search-icon" style="width:14px;height:14px;"></i>
+            <input type="text" id="globalSearchInput" class="search-input" placeholder="Search parcel ID, owner, sector... (/)" />
+            <div class="search-dropdown" id="searchDropdown"></div>
+          </div>
+
+          <button class="btn btn-outline btn-sm" id="btnQuickRunAI">
+            <i data-lucide="play" style="width:13px;height:13px;"></i>
+            Run AI Pipeline
+          </button>
+
+          <span class="badge badge-neutral mono" id="headerDateBadge">02 Nov 2024</span>
+        </div>
+      </header>
+
+      <!-- VIEW 2: COMMAND CENTER (Screen 2) -->
+      <section class="app-view active" id="view-command-center">
+        <!-- 5 Top KPI Cards -->
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-label">Total Parcels</div>
+            <div class="kpi-value" id="kpiTotalParcels">1,248</div>
+            <div class="kpi-subtext">Sector 12-B Cadastre</div>
+          </div>
+          <div class="kpi-card verified">
+            <div class="kpi-label">Verified</div>
+            <div class="kpi-value" id="kpiVerified">1,116</div>
+            <div class="kpi-subtext">Within 2% boundary tolerance</div>
+          </div>
+          <div class="kpi-card review">
+            <div class="kpi-label">Needs Review</div>
+            <div class="kpi-value" id="kpiNeedsReview">84</div>
+            <div class="kpi-subtext">Pending inspector audit</div>
+          </div>
+          <div class="kpi-card discrepancy">
+            <div class="kpi-label">Discrepancies</div>
+            <div class="kpi-value" id="kpiDiscrepancies">48</div>
+            <div class="kpi-subtext">Overlaps & encroachment</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Monitored Area</div>
+            <div class="kpi-value" id="kpiMonitoredAcres">642.8 ac</div>
+            <div class="kpi-subtext">0.05m GSD drone ortho</div>
+          </div>
+        </div>
+
+        <!-- Command Center Main Workspace -->
+        <div class="command-workspace">
+          <!-- Map Area -->
+          <div class="map-wrapper">
+            <div id="commandMap" class="map-container"></div>
+
+            <!-- Floating Map Toolbar -->
+            <div class="map-toolbar">
+              <button class="map-toolbar-btn" id="btnToggleLayers">
+                <i data-lucide="layers" style="width:13px;height:13px;"></i>
+                Layers
+              </button>
+              <button class="map-toolbar-btn" id="btnResetBounds">
+                <i data-lucide="maximize" style="width:13px;height:13px;"></i>
+                Fit Sector
+              </button>
+              <button class="map-toolbar-btn" id="btnToggleSatellite">
+                <i data-lucide="globe" style="width:13px;height:13px;"></i>
+                Satellite On
+              </button>
+            </div>
+
+            <!-- Floating Legend Bar (Matching UI Reference) -->
+            <div class="map-legend-bar">
+              <div class="legend-items">
+                <div class="legend-item">
+                  <span class="legend-dot verified"></span>
+                  <span>Verified Parcel</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot discrepancy"></span>
+                  <span>AI Overlap / Encroachment</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot pending"></span>
+                  <span>Pending Pass</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot ortho"></span>
+                  <span>0.05m Drone Ortho Active</span>
+                </div>
+              </div>
+              <div class="mono" style="font-size:11px;color:var(--text-muted);">EPSG:4326 · SRM Ramapuram</div>
+            </div>
+          </div>
+
+          <!-- Right Inspection Card ("Parcel Intelligence") -->
+          <aside class="parcel-intel-card" id="parcelIntelCard">
+            <div class="intel-card-header">
+              <div>
+                <div class="intel-title" id="intelParcelId">PCL-1044</div>
+                <div style="font-size:11px;color:var(--text-secondary);" id="intelOwner">Devika Raman</div>
+              </div>
+              <span class="badge badge-discrepancy" id="intelStatusBadge">HIGH RISK DISCREPANCY</span>
+            </div>
+
+            <div class="intel-meta-grid">
+              <div class="intel-meta-item">
+                <div class="intel-meta-label">Calculated Area</div>
+                <div class="intel-meta-val mono" id="intelArea">26,571.6 sq ft</div>
+                <div style="font-size:10px;color:var(--text-muted);" id="intelAcres">0.61 acres</div>
+              </div>
+              <div class="intel-meta-item">
+                <div class="intel-meta-label">AI IoU Overlap</div>
+                <div class="intel-meta-val mono" id="intelIoU" style="color:var(--status-discrepancy);">81.0%</div>
+                <div style="font-size:10px;color:var(--text-muted);">Tolerance: 90%</div>
+              </div>
+              <div class="intel-meta-item">
+                <div class="intel-meta-label">Displacement</div>
+                <div class="intel-meta-val mono" id="intelDisplacement">2.4 m East</div>
+                <div style="font-size:10px;color:var(--text-muted);">Centroid shift</div>
+              </div>
+              <div class="intel-meta-item">
+                <div class="intel-meta-label">Encroachment</div>
+                <div class="intel-meta-val mono" id="intelEncroachment" style="color:var(--status-discrepancy);">340.0 sq ft</div>
+                <div style="font-size:10px;color:var(--text-muted);" id="intelConflictTarget">into PCL-1045</div>
+              </div>
+            </div>
+
+            <div class="intel-diagnostic-box" id="intelDiagnosticBox">
+              <div class="intel-diagnostic-title">
+                <i data-lucide="alert-circle" style="width:13px;height:13px;"></i>
+                Surveyor Diagnostic Notes
+              </div>
+              <div class="intel-diagnostic-text" id="intelNotes">
+                AI-detected boundary extends ~340 sq. ft east into PCL-1045. Boundary fence offset detected against registered deed.
+              </div>
+            </div>
+
+            <!-- Working Action Buttons -->
+            <div class="intel-actions">
+              <button class="btn btn-primary" id="btnIntelReview">
+                <i data-lucide="git-compare" style="width:14px;height:14px;"></i>
+                Review Discrepancy (Side-by-Side)
+              </button>
+              <button class="btn btn-outline" id="btnIntelAssign">
+                <i data-lucide="user-plus" style="width:14px;height:14px;"></i>
+                Assign Field Survey
+              </button>
+              <button class="btn btn-outline" id="btnIntelReport">
+                <i data-lucide="file-down" style="width:14px;height:14px;"></i>
+                Generate Official Report
+              </button>
+              <button class="btn btn-forest" id="btnIntelVerify">
+                <i data-lucide="check-circle" style="width:14px;height:14px;"></i>
+                Verify Boundary
+              </button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- VIEW 3: MAP INTELLIGENCE (Screen 3: Full-Bleed GIS) -->
+      <section class="app-view" id="view-map-intel">
+        <div id="fullGisMap" class="full-gis-container"></div>
+
+        <!-- Floating GIS Layers Panel -->
+        <div class="gis-floating-panel">
+          <div style="font-size:12px;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.04em;">
+            GIS Layer Management
+          </div>
+          
+          <label class="layer-toggle-row">
+            <span>Esri World Imagery Basemap</span>
+            <input type="checkbox" id="layerToggleSatellite" checked />
+          </label>
+          <label class="layer-toggle-row">
+            <span>Registered Cadastral Parcels</span>
+            <input type="checkbox" id="layerToggleRegistered" checked />
+          </label>
+          <label class="layer-toggle-row">
+            <span>AI Detected Boundaries (U-Net)</span>
+            <input type="checkbox" id="layerToggleAI" checked />
+          </label>
+          <label class="layer-toggle-row">
+            <span>Encroachment Highlights</span>
+            <input type="checkbox" id="layerToggleDiscrepancies" checked />
+          </label>
+
+          <div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--border-subtle);">
+            <div style="font-size:11px;color:var(--text-secondary);margin-bottom:6px;">AI Overlay Opacity</div>
+            <input type="range" id="sliderAIOpacity" min="0" max="100" value="80" style="width:100%;" />
+          </div>
+        </div>
+
+        <!-- Mouse Coordinates Tracker -->
+        <div class="gis-coords-tracker" id="gisCoordsTracker">
+          80.181600° E, 13.032800° N
+        </div>
+      </section>
+
+      <!-- VIEW: PARCELS TABLE (Cadastre Index) -->
+      <section class="app-view" id="view-parcels" style="padding:20px 24px;">
+        <div class="data-table-card">
+          <div class="table-toolbar">
+            <div style="font-size:14px;font-weight:700;">Cadastral Parcels Index (Sector 12-B)</div>
+            <div style="display:flex;gap:10px;">
+              <input type="text" id="parcelsFilterInput" class="search-input" placeholder="Filter parcels..." style="width:200px;" />
+              <button class="btn btn-outline btn-sm" id="btnRefreshParcels">
+                <i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>
+                Refresh
+              </button>
+            </div>
+          </div>
+          <table class="grid-table" id="parcelsTable">
+            <thead>
+              <tr>
+                <th>Parcel ID</th>
+                <th>Owner</th>
+                <th>Calculated Area</th>
+                <th>Status</th>
+                <th>AI IoU</th>
+                <th>Displacement</th>
+                <th>Last Synced</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="parcelsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: IMAGERY MANAGEMENT -->
+      <section class="app-view" id="view-imagery" style="padding:20px 24px;max-width:960px;margin:0 auto;width:100%;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <h2 style="font-size:16px;font-weight:700;">Survey Orthophoto & Drone Passes</h2>
+            <p style="font-size:12px;color:var(--text-secondary);">Ingest high-resolution GeoTIFF / drone orthophotos for AI segmentation.</p>
+          </div>
+          <span class="badge badge-neutral mono">0.05m GSD Nominal</span>
+        </div>
+
+        <div class="dropzone" id="imageryDropzone" style="margin-bottom:20px;">
+          <i data-lucide="upload-cloud" style="width:36px;height:36px;color:var(--accent-forest);margin-bottom:10px;"></i>
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Drag & drop georeferenced survey orthophoto</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Supports TIFF, GeoTIFF, PNG, JPEG up to 500MB</div>
+          <input type="file" id="imageryFileInput" accept="image/*,.tif,.tiff" style="display:none;" />
+          <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="document.getElementById('imageryFileInput').click()">Browse Local File</button>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-toolbar">
+            <div style="font-size:13px;font-weight:700;">Ingested Survey Passes</div>
+          </div>
+          <table class="grid-table">
+            <thead>
+              <tr>
+                <th>Imagery ID</th>
+                <th>Area / Sector</th>
+                <th>Filename</th>
+                <th>Uploaded</th>
+                <th>Resolution</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="imageryTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 5: AI PROCESSING (Screen 5: 7-Stage Pipeline) -->
+      <section class="app-view" id="view-ai-processing">
+        <div class="pipeline-header">
+          <div>
+            <div class="pipeline-title">AI Cadastral Verification Pipeline</div>
+            <div style="font-size:12px;color:var(--text-secondary);">Sector 12-B High-Resolution Orthophoto Segmentation & PostGIS Verification</div>
+          </div>
+          <button class="btn btn-primary" id="btnExecutePipeline">
+            <i data-lucide="play" style="width:14px;height:14px;"></i>
+            Run AI Verification Pipeline
+          </button>
+        </div>
+
+        <div class="pipeline-stepper" id="pipelineStepper">
+          <!-- 7-Stage Execution Stepper matching Screen 5 -->
+          <div class="stepper-stage completed" data-stage="1">
+            <div class="stage-num">01</div>
+            <div class="stage-content">
+              <div class="stage-title">
+                <span>Ingestion & Tiling</span>
+                <span class="stage-time mono" id="timeStage1">0.012s</span>
+              </div>
+              <div class="stage-desc">Georeferenced orthophoto header validation, spatial bounds extraction, and tile indexing.</div>
+            </div>
+          </div>
+
+          <div class="stepper-stage completed" data-stage="2">
+            <div class="stage-num">02</div>
+            <div class="stage-content">
+              <div class="stage-title">
+                <span>Orthorectification & Filtering</span>
+                <span class="stage-time mono" id="timeStage2">0.018s</span>
+              </div>
+              <div class="stage-desc">Rasterio orthorectification, CLAHE contrast enhancement, and bilateral edge preservation.</div>
+            </div>
+          </div>
+
+          <div class="stepper-stage completed" data-stage="3">
+            <div class="stage-num">03</div>
+            <div class="stage-content">
+              <div class="stage-title">
+                <span>Boundary Segmentation (PyTorch U-Net)</span>
+                <span class="stage-time mono" id="timeStage3">0.045s</span>
+              </div>
+              <div class="stage-desc">PyTorch U-Net neural boundary segmentation generating sub-pixel boundary probability masks.</div>
+            </div>
+          </div>
+
+          <div class="stepper-stage completed" data-stage="4">
+            <div class="stage-num">04</div>
+            <div class="stage-content">
+              <div class="stage-title">
+                <span>Polygon Vectorization</span>
+                <span class="stage-time mono" id="timeStage4">0.021s</span>
+              </div>
+              <div class="stage-desc">OpenCV contour vectorization simplified into topological WGS84 (EPSG:4326) closed rings.</div>
+            </div>
+          </div>
+
+          <div class="stepper-stage completed" data-stage="5">
+            <div class="stage-num">05</div>
+            <div class="stage-content">
+              <div class="stage-title">
+                <span>Cadastral Cross-Reference</span>
+                <span class="stage-time mono" id="timeStage5">0.034s</span>
+              </div>
+              <div class="stage-desc">PostGIS spatial join comparing registered deed coordinates against extracted contours.</div>
+            </div>
+          </div>
+
+          <div class="stepper-stage completed" data-stage="6">
+            <div class="stage-num">06</div>
+            <div class="stage-content">
+              <div class="stage-title">
+                <span>Encroachment & IoU Scoring</span>
+                <span class="stage-time mono" id="timeStage6">0.015s</span>
+              </div>
+              <div class="stage-desc">Intersection-over-Union computation and centroid drift analysis (2.4m displacement flagged on PCL-1044).</div>
+            </div>
+          </div>
+
+          <div class="stepper-stage completed" data-stage="7">
+            <div class="stage-num">07</div>
+            <div class="stage-content">
+              <div class="stage-title">
+                <span>Database Sync & Dispatch</span>
+                <span class="stage-time mono" id="timeStage7">0.010s</span>
+              </div>
+              <div class="stage-desc">PostGIS geometry synchronization, dispute registry update, and audit log recorded.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Processing Summary Card -->
+        <div style="margin-top:16px;background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:13px;font-weight:700;">Latest Pipeline Execution</div>
+            <div style="font-size:11px;color:var(--text-secondary);" id="pipelineExecutionMeta">Completed in 0.155s · 10 Parcels Processed · 2 Discrepancies Flagged</div>
+          </div>
+          <span class="badge badge-verified">READY</span>
+        </div>
+      </section>
+
+      <!-- VIEW 6: DISCREPANCY CENTER (Screen 6) -->
+      <section class="app-view" id="view-discrepancies">
+        <div class="discrepancy-header">
+          <div>
+            <h2 style="font-size:16px;font-weight:700;">Discrepancy Center</h2>
+            <p style="font-size:12px;color:var(--text-secondary);">Manage and triage cadastral boundary conflicts, encroachments, and surveyor assignments.</p>
+          </div>
+          
+          <!-- Filter Pills Matching Reference -->
+          <div class="filter-pills-row">
+            <div class="filter-pill active" data-filter="all">All (48)</div>
+            <div class="filter-pill" data-filter="high">High Priority (18)</div>
+            <div class="filter-pill" data-filter="medium">Medium (22)</div>
+            <div class="filter-pill" data-filter="low">Low (8)</div>
+            <div class="filter-pill" data-filter="unresolved">Unresolved (42)</div>
+            <div class="filter-pill" data-filter="resolved">Resolved (6)</div>
+          </div>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-toolbar">
+            <div style="display:flex;gap:10px;align-items:center;">
+              <input type="text" id="discrepancySearchInput" class="search-input" placeholder="Search disputes..." style="width:240px;" />
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);">Real-time PostGIS Dispute Registry</div>
+          </div>
+          <table class="grid-table" id="discrepanciesTable">
+            <thead>
+              <tr>
+                <th>Discrepancy ID</th>
+                <th>Target Parcel</th>
+                <th>Owner</th>
+                <th>Conflict Target</th>
+                <th>Encroachment</th>
+                <th>Displacement</th>
+                <th>IoU</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="discrepanciesTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 7: FIELD VERIFICATION (Screen 7) -->
+      <section class="app-view" id="view-field-verification">
+        <div style="margin-bottom:16px;">
+          <h2 style="font-size:16px;font-weight:700;">Field Verification & Evidence Submission</h2>
+          <p style="font-size:12px;color:var(--text-secondary);">5-stage on-site ground truth verification workflow for flagged parcel conflicts.</p>
+        </div>
+
+        <!-- 5-Stage Stepper Matching Screen 7 -->
+        <div class="fv-workflow-stepper">
+          <div class="fv-step completed">
+            <div class="fv-step-circle">1</div>
+            <span>AI Detection</span>
+          </div>
+          <div class="fv-step completed">
+            <div class="fv-step-circle">2</div>
+            <span>Inspector Review</span>
+          </div>
+          <div class="fv-step active">
+            <div class="fv-step-circle">3</div>
+            <span>Field Survey</span>
+          </div>
+          <div class="fv-step">
+            <div class="fv-step-circle">4</div>
+            <span>Evidence</span>
+          </div>
+          <div class="fv-step">
+            <div class="fv-step-circle">5</div>
+            <span>Resolution</span>
+          </div>
+        </div>
+
+        <div class="fv-details-grid">
+          <!-- Active Assignment Details -->
+          <div class="fv-card">
+            <div class="fv-card-title">Active Assignment Details</div>
+            
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+              <div class="intel-meta-item">
+                <div class="intel-meta-label">Target Parcel</div>
+                <div class="intel-meta-val mono" id="fvParcelId">PCL-1044</div>
+                <div style="font-size:10px;color:var(--text-muted);">Devika Raman</div>
+              </div>
+              <div class="intel-meta-item">
+                <div class="intel-meta-label">Assigned Inspector</div>
+                <div class="intel-meta-val" id="fvInspector">Dr. J. Jean Justus</div>
+                <div style="font-size:10px;color:var(--text-muted);">Chief Surveyor</div>
+              </div>
+              <div class="intel-meta-item">
+                <div class="intel-meta-label">Scheduled Date</div>
+                <div class="intel-meta-val mono" id="fvDate">04 Nov 2024</div>
+                <div style="font-size:10px;color:var(--text-muted);">Sector 12-B</div>
+              </div>
+              <div class="intel-meta-item">
+                <div class="intel-meta-label">Flagged Encroachment</div>
+                <div class="intel-meta-val mono" style="color:var(--status-discrepancy);" id="fvEncroachment">340.0 sq ft</div>
+                <div style="font-size:10px;color:var(--text-muted);">2.4m Displacement</div>
+              </div>
+            </div>
+
+            <div class="intel-meta-item" style="margin-bottom:14px;">
+              <div class="intel-meta-label">GPS RTK Coordinates</div>
+              <div class="intel-meta-val mono" style="font-size:12px;">13.033240° N, 80.181420° E (SRM Ramapuram Zone)</div>
+            </div>
+
+            <div>
+              <label style="font-size:11px;font-weight:600;display:block;margin-bottom:6px;">Resolution Action</label>
+              <select id="fvResolutionAction" style="width:100%;height:32px;padding:0 8px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:#fff;">
+                <option value="boundary_verified">Boundary Verified & Dispute Cleared</option>
+                <option value="confirm_encroachment">Confirm Physical Encroachment (Notice Issued)</option>
+                <option value="correct_cadastre">Recommend Cadastral Boundary Adjustment</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Evidence Upload & Notes -->
+          <div class="fv-card">
+            <div class="fv-card-title">Field Evidence & Ground Truth</div>
+
+            <div class="dropzone" id="fvEvidenceDropzone" style="padding:16px;margin-bottom:12px;">
+              <i data-lucide="camera" style="width:24px;height:24px;color:var(--accent-forest);margin-bottom:6px;"></i>
+              <div style="font-size:12px;font-weight:600;">Upload On-Site Field Photograph</div>
+              <div style="font-size:10px;color:var(--text-muted);">Drop boundary stone, fence line, or GNSS RTK photo</div>
+              <input type="file" id="fvPhotoInput" accept="image/*" style="display:none;" />
+              <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="document.getElementById('fvPhotoInput').click()">Browse Photo</button>
+            </div>
+
+            <div class="evidence-preview-grid" id="fvEvidencePreviewGrid">
+              <img src="https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?w=300&auto=format&fit=crop&q=60" alt="Boundary Marker" class="evidence-thumb" />
+            </div>
+
+            <div style="margin-top:12px;">
+              <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px;">Field Surveyor Observations</label>
+              <textarea id="fvFieldNotes" rows="3" style="width:100%;padding:8px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);outline:none;font-size:12px;" placeholder="Record ground marker conditions, physical fence offsets, and witness testimony...">Boundary stone B-12 located on-site. Physical fence displaced 2.4m eastward into PCL-1045. Field GPS measurements recorded.</textarea>
+            </div>
+
+            <button class="btn btn-primary" id="btnSubmitVerification" style="width:100%;margin-top:14px;">
+              <i data-lucide="check-square" style="width:14px;height:14px;"></i>
+              Submit Field Verification
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 8: REPORTS INDEX -->
+      <section class="app-view" id="view-reports" style="padding:20px 24px;max-width:960px;margin:0 auto;width:100%;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <h2 style="font-size:16px;font-weight:700;">Official Cadastral Reports</h2>
+            <p style="font-size:12px;color:var(--text-secondary);">Generate and download legally verifiable Cadastral Boundary Verification Reports.</p>
+          </div>
+          <span class="badge badge-neutral mono">ReportLab PDF Engine</span>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-toolbar">
+            <div style="font-size:13px;font-weight:700;">Sector 12-B Inspection Reports</div>
+          </div>
+          <table class="grid-table">
+            <thead>
+              <tr>
+                <th>Report ID</th>
+                <th>Target Parcel</th>
+                <th>Owner</th>
+                <th>Status</th>
+                <th>Encroachment</th>
+                <th>Certified Date</th>
+                <th>Download Actions</th>
+              </tr>
+            </thead>
+            <tbody id="reportsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: SYSTEM ACTIVITY & LOGS -->
+      <section class="app-view" id="view-system" style="padding:20px 24px;max-width:960px;margin:0 auto;width:100%;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <h2 style="font-size:16px;font-weight:700;">System Audit & Activity Logs</h2>
+            <p style="font-size:12px;color:var(--text-secondary);">Immutable log of spatial operations, AI detections, and surveyor sign-offs.</p>
+          </div>
+          <span class="badge badge-verified">POSTGIS ACTIVE</span>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-toolbar">
+            <div style="font-size:13px;font-weight:700;">Recent Audit Trail</div>
+            <button class="btn btn-outline btn-sm" id="btnRefreshActivity">
+              <i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>
+              Refresh
+            </button>
+          </div>
+          <table class="grid-table">
+            <thead>
+              <tr>
+                <th>Event ID</th>
+                <th>Timestamp</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Parcel</th>
+                <th>Actor</th>
+              </tr>
+            </thead>
+            <tbody id="activityTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+
+  <!-- ======================================================================
+       SCREEN 4: PARCEL COMPARISON MODAL (Dual View Registered vs AI)
+       ====================================================================== -->
+  <div class="modal-backdrop" id="modalParcelComparison">
+    <div class="modal-dialog large">
+      <div class="modal-header">
+        <div class="modal-title" id="compModalTitle">Parcel Comparison · PCL-1044 vs AI-Derived Detection</div>
+        <button class="btn btn-icon btn-ghost modal-close" data-modal="modalParcelComparison">
+          <i data-lucide="x" style="width:16px;height:16px;"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="comparison-grid">
+          <!-- Left: Registered Cadastral Record -->
+          <div class="comparison-panel">
+            <div class="comparison-panel-title">
+              <span>Registered Cadastral Record</span>
+              <span class="badge badge-neutral mono">WGS84 DEED</span>
+            </div>
+            <div class="comparison-svg-box" id="compRegisteredSvgBox"></div>
+            <div style="font-size:12px;display:flex;justify-content:space-between;margin-bottom:4px;">
+              <span style="color:var(--text-muted);">Deed Area:</span>
+              <span class="mono" id="compRegArea">26,571.6 sq ft</span>
+            </div>
+            <div style="font-size:12px;display:flex;justify-content:space-between;margin-bottom:4px;">
+              <span style="color:var(--text-muted);">Registry Date:</span>
+              <span class="mono">2018-04-12</span>
+            </div>
+            <div style="font-size:12px;display:flex;justify-content:space-between;">
+              <span style="color:var(--text-muted);">Coordinates:</span>
+              <span class="mono" style="font-size:11px;">80.18138° E, 13.03320° N</span>
+            </div>
+          </div>
+
+          <!-- Right: AI-Derived Boundary -->
+          <div class="comparison-panel">
+            <div class="comparison-panel-title">
+              <span style="color:var(--status-discrepancy);">AI-Derived Boundary (Drone Ortho)</span>
+              <span class="badge badge-discrepancy mono">U-NET PASS</span>
+            </div>
+            <div class="comparison-svg-box" id="compDetectedSvgBox"></div>
+            <div style="font-size:12px;display:flex;justify-content:space-between;margin-bottom:4px;">
+              <span style="color:var(--text-muted);">Detected Area:</span>
+              <span class="mono" id="compDetArea" style="color:var(--status-discrepancy);">26,911.6 sq ft (+340.0)</span>
+            </div>
+            <div style="font-size:12px;display:flex;justify-content:space-between;margin-bottom:4px;">
+              <span style="color:var(--text-muted);">Segmentation Pass:</span>
+              <span class="mono">2024-11-02 10:35 UTC</span>
+            </div>
+            <div style="font-size:12px;display:flex;justify-content:space-between;">
+              <span style="color:var(--text-muted);">Conflict Target:</span>
+              <span class="mono" style="color:var(--status-discrepancy);" id="compConflictWith">PCL-1045</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics Grid Matching Screen 4 -->
+        <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;background:#F9FAFB;border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:12px;">
+          <div>
+            <div class="intel-meta-label">IoU Score</div>
+            <div class="intel-meta-val mono" id="compIoUScore" style="color:var(--status-discrepancy);">0.81</div>
+          </div>
+          <div>
+            <div class="intel-meta-label">Boundary Displacement</div>
+            <div class="intel-meta-val mono" id="compDisplacement">2.4 m East</div>
+          </div>
+          <div>
+            <div class="intel-meta-label">Affected Area</div>
+            <div class="intel-meta-val mono" id="compAffectedArea" style="color:var(--status-discrepancy);">340.0 sq ft</div>
+          </div>
+          <div>
+            <div class="intel-meta-label">Dispute Risk</div>
+            <div class="intel-meta-val" style="color:var(--status-discrepancy);">HIGH</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline modal-close" data-modal="modalParcelComparison">Close</button>
+        <button class="btn btn-outline" id="btnCompAssign">Assign Field Survey</button>
+        <button class="btn btn-outline" id="btnCompReport">Generate Report</button>
+        <button class="btn btn-forest" id="btnCompVerify">Verify Boundary</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================================================================
+       SCREEN 8: REPORT PREVIEW MODAL (Official PDF / JSON Download)
+       ====================================================================== -->
+  <div class="modal-backdrop" id="modalReportPreview">
+    <div class="modal-dialog large">
+      <div class="modal-header">
+        <div class="modal-title" id="repModalTitle">Official Cadastral Discrepancy & Verification Report</div>
+        <button class="btn btn-icon btn-ghost modal-close" data-modal="modalReportPreview">
+          <i data-lucide="x" style="width:16px;height:16px;"></i>
+        </button>
+      </div>
+
+      <div class="modal-body" style="background:#F3F4F6;">
+        <!-- Institutional Report Canvas Document Preview -->
+        <div style="background:#FFF;border:1px solid #D1D5DB;padding:32px;box-shadow:var(--shadow-md);max-width:760px;margin:0 auto;color:#111827;">
+          <!-- Report Header -->
+          <div style="display:flex;justify-content:space-between;border-bottom:2px solid #1E3A2F;padding-bottom:12px;margin-bottom:16px;">
+            <div>
+              <div style="font-size:18px;font-weight:800;color:#1E3A2F;letter-spacing:0.02em;">REIGNGRID · CADASTRAL INTELLIGENCE</div>
+              <div style="font-size:11px;color:#65676B;">OFFICIAL DISCREPANCY & VERIFICATION CERTIFICATE</div>
+            </div>
+            <div style="text-align:right;font-size:11px;color:#4B5563;">
+              <div class="mono" style="font-weight:600;" id="repDocId">REP-PCL-1044-20241102</div>
+              <div>ANCHOR: SRM Ramapuram, Chennai</div>
+              <div class="mono" id="repDocDate">02 Nov 2024</div>
+            </div>
+          </div>
+
+          <!-- Status Bar -->
+          <div style="background:#F9FAFB;border:1px solid #111827;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:700;">
+              STATUS: <span style="color:#DC2626;" id="repDocStatus">DISCREPANCY FLAGGED</span>
+            </div>
+            <div class="mono" style="font-size:11px;">EPSG:4326 (WGS84 LAT/LON)</div>
+          </div>
+
+          <!-- Details Grid -->
+          <table class="grid-table" style="margin-bottom:16px;border:1px solid #E5E7EB;">
+            <tbody>
+              <tr>
+                <td style="font-weight:600;background:#F9FAFB;width:140px;">Parcel Identifier:</td>
+                <td class="mono" id="repDocParcelId">PCL-1044</td>
+                <td style="font-weight:600;background:#F9FAFB;width:140px;">Calculated Area:</td>
+                <td class="mono" id="repDocArea">26,571.6 sq ft (0.61 ac)</td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;background:#F9FAFB;">Recorded Owner:</td>
+                <td id="repDocOwner">Devika Raman</td>
+                <td style="font-weight:600;background:#F9FAFB;">Conflicting Parcel:</td>
+                <td class="mono" style="color:#DC2626;" id="repDocConflict">PCL-1045</td>
+              </tr>
+              <tr>
+                <td style="font-weight:600;background:#F9FAFB;">IoU Overlap:</td>
+                <td class="mono" id="repDocIoU">81.0%</td>
+                <td style="font-weight:600;background:#F9FAFB;">Est. Encroachment:</td>
+                <td class="mono" style="color:#DC2626;" id="repDocEncroachment">340.0 sq ft (2.4m displacement)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Vector Schematic Canvas -->
+          <div style="margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:700;margin-bottom:6px;text-transform:uppercase;">Vector Comparison Schematic</div>
+            <div style="background:#1A202C;height:140px;border-radius:4px;display:flex;align-items:center;justify-content:center;position:relative;" id="repSvgContainer">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Sign-off Block -->
+          <div style="border:1px solid #111827;background:#F9FAFB;padding:12px;display:flex;justify-content:space-between;margin-top:20px;">
+            <div style="font-size:11px;">
+              <div><b>Certified Inspector:</b> Dr. J. Jean Justus</div>
+              <div><b>Title:</b> Chief Cadastral Surveyor</div>
+              <div><b>Jurisdiction:</b> Ramapuram Cadastral Zone, Chennai</div>
+            </div>
+            <div style="text-align:right;font-size:11px;">
+              <div style="color:#1E3A2F;font-weight:800;">[VERIFIED · REIGNGRID]</div>
+              <div class="mono" style="color:#65676B;">Digital PostGIS Signature</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline modal-close" data-modal="modalReportPreview">Close</button>
+        <button class="btn btn-outline" id="btnDownloadReportJSON">
+          <i data-lucide="code" style="width:14px;height:14px;"></i>
+          Download JSON
+        </button>
+        <button class="btn btn-primary" id="btnDownloadReportPDF">
+          <i data-lucide="download" style="width:14px;height:14px;"></i>
+          Download Official PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================================================================
+       ASSIGN FIELD SURVEY MODAL
+       ====================================================================== -->
+  <div class="modal-backdrop" id="modalAssignSurvey">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">Assign Field Survey Inspection</div>
+        <button class="btn btn-icon btn-ghost modal-close" data-modal="modalAssignSurvey">
+          <i data-lucide="x" style="width:16px;height:16px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px;">Discrepancy / Parcel ID</label>
+          <input type="text" id="assignParcelId" class="search-input" readonly style="background:#F3F4F6;" />
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px;">Assign Inspector</label>
+          <select id="assignInspectorSelect" style="width:100%;height:32px;padding:0 8px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:#fff;">
+            <option value="Dr. J. Jean Justus">Dr. J. Jean Justus (Chief Cadastral Surveyor)</option>
+            <option value="R. Natarajan">R. Natarajan (Senior Land Surveyor)</option>
+            <option value="A. Swaminathan">A. Swaminathan (Field GNSS Inspector)</option>
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+          <div>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px;">Priority</label>
+            <select id="assignPrioritySelect" style="width:100%;height:32px;padding:0 8px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:#fff;">
+              <option value="HIGH">HIGH (Urgent Boundary Conflict)</option>
+              <option value="MEDIUM">MEDIUM (Moderate Offset)</option>
+              <option value="LOW">LOW (Routine Verification)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px;">Due Date</label>
+            <input type="date" id="assignDueDate" class="search-input" value="2024-11-08" />
+          </div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px;">Survey Instructions / Target Notes</label>
+          <textarea id="assignNotes" rows="3" style="width:100%;padding:8px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);outline:none;font-size:12px;" placeholder="Verify eastern boundary fence line and locate permanent corner stones..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline modal-close" data-modal="modalAssignSurvey">Cancel</button>
+        <button class="btn btn-primary" id="btnConfirmAssignSurvey">Assign Field Survey</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================================================================
+       INSPECTOR LOGIN MODAL
+       ====================================================================== -->
+  <div class="modal-backdrop" id="modalLogin">
+    <div class="modal-dialog" style="max-width:400px;">
+      <div class="modal-header">
+        <div class="modal-title">Inspector Authentication</div>
+        <button class="btn btn-icon btn-ghost modal-close" data-modal="modalLogin">
+          <i data-lucide="x" style="width:16px;height:16px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px;">Surveyor Email / Username</label>
+          <input type="text" id="loginUsername" class="search-input" value="inspector@reigngrid.gov" />
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px;">Security Password</label>
+          <input type="password" id="loginPassword" class="search-input" value="inspector123" />
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);">
+          Default Demo: <span class="mono">inspector@reigngrid.gov / inspector123</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline modal-close" data-modal="modalLogin">Cancel</button>
+        <button class="btn btn-primary" id="btnSubmitLogin">Sign In</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Toast Notification Hub -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    // Initialize Lucide Icons after DOM load
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
